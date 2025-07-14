@@ -2,7 +2,7 @@
 
 import express from "express"; // --> Importar express
 import cors from "cors";  // --> Importar cors
-import productsRouter from './src/routers/products.router.js'
+import productsRouter from './src/routes/products.router.js'
 
 const app = express(); 
 
@@ -13,7 +13,7 @@ app.use(cors());   //--> usar cors
 
 app.use(express.json());  //--> usar express
 
-app.use(productsRouter);
+app.use("/api", productsRouter);
 
 // Usar MIDDLEWARE para leer un error -- va al final de todas las peticiones
 //Llega la petición pasa por todas las rutas si no detecta nada arroja mensaje de error
