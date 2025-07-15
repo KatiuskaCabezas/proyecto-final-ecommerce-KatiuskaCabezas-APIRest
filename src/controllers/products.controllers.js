@@ -81,16 +81,15 @@ export const putProducts = (req, res) => {
 
 // Para borrar producto
 
-export const deleteProducts = (req, res) => {
+export const deleteProduct = (req, res) => {
   
   const productId = parseInt(req.params.id, 10); //--> Id se pasa a un entero
-  const productIndex = products.findIndex((p) => p.id === productId); //busca el indice del producto por el Id
-                                                                      
-    if (productIndex === -1) {
-      return res.status(404).json({error: "Producto no encontrado"}); //Para informar un error
-  }
 
-  products.splice(productIndex, 1); //--> Quita el elemento
+  const product = model.deleteProduct(productId);  //--> Llama al modelo con el Id
+
+    if (!product) {
+      return res.status(404).json({error: "Producto no encontrado"}); //Para informar un error
+  }  
 
   res.status(204).send(); //--> Informa que se borro el elemento 204=sin contenido
 };

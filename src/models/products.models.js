@@ -49,3 +49,23 @@ export const createProduct = (data) => {
 
     return newProduct;
 };
+
+// ------ DELETE -----------
+
+// Para borrar producto
+
+export const deleteProduct = (id) => {
+  const productIndex = products.findIndex((p) => p.id === id); //busca el indice del producto por el Id    
+  
+  if (productIndex == -1) {
+    return null;  
+  } else {
+    const product = products.splice(productIndex, 1); //--> Quita el elemento
+
+    fs.writeFileSync(jsonPath, JSON.stringify(products)); //--> guardar el obj en JSON
+
+    return product;
+  };
+  
+};
+

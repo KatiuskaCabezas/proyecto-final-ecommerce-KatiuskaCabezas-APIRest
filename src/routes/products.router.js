@@ -8,7 +8,7 @@ import {
   getProductById,
   createProduct,
   putProducts,
-  deleteProducts,
+  deleteProduct,
 } from "../controllers/products.controllers.js";
 
 // Productos temporales
@@ -54,6 +54,6 @@ router.put("/products/:id", putProducts);
 
 // Para borrar producto
 
-router.delete("/products/:id", deleteProducts);
+router.delete("/products/:id", deleteProduct);
 
 export default router; // Exportación por default
