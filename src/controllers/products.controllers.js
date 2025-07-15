@@ -1,19 +1,21 @@
-// Productos temporales
+// // Productos temporales
 
-const products =[
-  { id: 1, nombre: "producto uno 1", precio: 10.0, cantidad: 100},
-  { id: 2, nombre: "producto dos 2", precio: 20.0, cantidad: 200},
-  { id: 3, nombre: "producto tres 3", precio: 30.0, cantidad: 300},
-  { id: 4, nombre: "producto cuatro 4", precio: 40.0, cantidad: 400},
-  { id: 5, nombre: "producto cinco 5", precio: 50.0, cantidad: 500}
-]
+// const products =[
+//   { id: 1, nombre: "producto uno 1", precio: 10.0, cantidad: 100},
+//   { id: 2, nombre: "producto dos 2", precio: 20.0, cantidad: 200},
+//   { id: 3, nombre: "producto tres 3", precio: 30.0, cantidad: 300},
+//   { id: 4, nombre: "producto cuatro 4", precio: 40.0, cantidad: 400},
+//   { id: 5, nombre: "producto cinco 5", precio: 50.0, cantidad: 500}
+// ]
+
+import * as model from '../models/products.models.js';
 
 // ------ GET -----------
 
 //SI QUIERO MOSTRAR LISTA DE PRODUCTOS
 
  export const getAllProducts = (req, res) => {
-  res.json(products); 
+  res.json(model.getAllProducts()); 
 };
 
 //SI QUIERO BUSCAR UN PRODUCTO con un parametro
@@ -21,20 +23,23 @@ const products =[
 ///products/search?nombre=no&precio=10
  
 export const searchProducts = (req, res) => {
-  const { nombre } = req.query
+  const { name } = req.query
+
+  const products = model.getAllProducts();
 
   const filteredProducts = products.filter((p) => 
-    p.nombre.toLowerCase().includes(nombre.toLowerCase())
+    p.nombre.toLowerCase().includes(name.toLowerCase())
   );      
-  res.json(products); 
+  res.json(filteredProducts); 
 };
 
-//SI QUIERO ENVIAR UN PRODUCTO EN ESPECIFICO -- con parametro dinamico
+//SI QUIERO ENVIAR UN PRODUCTO por ID -- con parametro dinamico
 //Si el producto no existe ARROJA MENSAJE DE ERROR
 
-export const getProductsById = (req, res) => {
-  const { id } = req.params;  
-  const product = products.find((item) => item.id == id);
+export const getProductById = (req, res) => {
+  const { id } = req.params;
+
+  const product = model.getProductById(id);
 
   if (!product) {
     res.status(404).json({error: "no existe el producto"});
@@ -46,18 +51,11 @@ export const getProductsById = (req, res) => {
 
 //AGREGAR UN CAMBIO -- crear un Objeto (Producto)
 
-export const postNewProducts = (req, res) => {
-    const {nombre, precio, cantidad} = req.body //--> Se crea constante
+export const createProduct = (req, res) => {
+    const { name, price } = req.body //--> Se crea constante
 
-    const newProduct = {
-      id: products.length +1,
-      nombre,
-      precio,
-      cantidad
-    };                          //--> Se crea un objeto
+    const newProduct = model.createProduct({ name, price }); //llama al modelo
     
-    products.push(newProduct);    //--> Se hace un push del nuevo objeto
-
     res.status(201).json(newProduct);  //--> retorna un 201 (create), un producto que se creo 
 };
 

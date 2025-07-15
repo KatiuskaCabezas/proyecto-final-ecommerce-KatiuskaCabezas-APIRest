@@ -5,8 +5,8 @@ const router = Router();
 import {
   getAllProducts,
   searchProducts,
-  getProductsById,
-  postNewProducts,
+  getProductById,
+  createProduct,
   putProducts,
   deleteProducts,
 } from "../controllers/products.controllers.js";
@@ -27,38 +27,22 @@ const products =[
 
 router.get("/products", getAllProducts);
 
-//SI QUIERO ENVIAR UN PARAMETRO, EJ: ID -- es dinamico
-       // los params estan definidos en la ruta
-
-// router.get("/products/:id", (req, res) => {
-//   const product = products.find((item) => item.id == req.params.id);
-//   res.json(product); 
-// });
-
-//SI QUIERO ENVIAR VARIOS PARAMETROS, ORDENAR -- es dinamico
-
-// router.get("/products/:id", (req, res) => {
-//   const { id } = req.params;
-//   const product = products.find((item) => item.id == id);
-//   res.json(product); 
-// });
-
 //SI QUIERO BUSCAR UN PRODUCTO con un parametro
 //tiene que ir antes del parametro dinamico, los search NO estan definidos en la ruta, 
 ///products/search?nombre=no&precio=10
 
 router.get("/products/search", searchProducts);
 
-//SI QUIERO ENVIAR UN PRODUCTO EN ESPECIFICO -- con parametro dinamico
+//SI QUIERO ENVIAR UN PRODUCTO por ID -- con parametro dinamico
 //Si el producto no existe ARROJA MENSAJE DE ERROR
 
-router.get("/products/:id", getProductsById);
+router.get("/products/:id", getProductById);
 
 // ------ POST -----------
 
 //AGREGAR UN CAMBIO -- crear un Objeto
 
-router.post("/products", postNewProducts);
+router.post("/products", createProduct);
 
 // ------ PUT -----------
 
