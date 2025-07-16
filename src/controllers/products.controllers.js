@@ -14,18 +14,20 @@ import * as model from '../models/products.models.js';
 
 //SI QUIERO MOSTRAR LISTA DE PRODUCTOS
 
- export const getAllProducts = (req, res) => {
-  res.json(model.getAllProducts()); 
+export const getAllProducts = async (req, res) => {
+  const products = await model.getAllProducts();
+
+  res.json(products);
 };
 
 //SI QUIERO BUSCAR UN PRODUCTO con un parametro
 //tiene que ir antes del parametro dinamico, los search NO estan definidos en la ruta, 
 ///products/search?nombre=no&precio=10
  
-export const searchProducts = (req, res) => {
+export const searchProducts = async (req, res) => {
   const { name } = req.query
 
-  const products = model.getAllProducts();
+  const products = await model.getAllProducts();
 
   const filteredProducts = products.filter((p) => 
     p.nombre.toLowerCase().includes(name.toLowerCase())

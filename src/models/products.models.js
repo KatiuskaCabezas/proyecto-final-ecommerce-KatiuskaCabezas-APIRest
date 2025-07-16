@@ -21,16 +21,43 @@ const products = JSON.parse(json);
 
 // console.log (products);
 
+import { db } from "./data.js"; //Importar la base de datos desde firestore
+
+import {
+  collection,
+  getDocs,
+  doc,
+  getDoc,
+  addDoc,
+  deleteDoc,
+  setDoc,
+} from 'firebase/firestore';
+
+const productCollection = collection(db, "products"); //constante para buscar los productos
+
+// ------ GET -----------
+
 //Para listar todos los productos
 
-export const getAllProducts = () => {
-    return products;
+export const getAllProducts = async () => {
+  try {
+    const snapshot = await getDocs(productCollection);
+    return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 //Para buscar un productos
 
-export const getProductById = (id) => {
-  return products.find((item) => item.id == id);
+export const getProductById = async (id) => {
+  try {
+    const productRef = doc(productsCollection, id);
+    const snapshot = await getDoc(productRef);
+    return snapshot.exists() ? { id: snapshot.id, ...snapshot.data() } : null;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 // ------ POST -----------
