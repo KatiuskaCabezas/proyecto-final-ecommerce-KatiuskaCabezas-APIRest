@@ -1,6 +1,10 @@
 # proyecto-final-ecommerce-KatiuskaCabezas-APIRest
+Creación de una API con Node.js y Firebase
 
 ## Instalación
+
+shell
+npm install
 
 Express
 Nodemon

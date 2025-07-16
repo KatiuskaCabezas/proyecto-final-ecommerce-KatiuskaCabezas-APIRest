@@ -19,21 +19,22 @@ const json = fs.readFileSync(jsonPath, "utf-8"); //--> el utf-8 se usa para pode
 
 const products = JSON.parse(json);
 
-// console.log (products);
+//Importar la base de datos desde firestore
 
-import { db } from "./data.js"; //Importar la base de datos desde firestore
+import  { db } from "./data.js";
 
-import {
-  collection,
+import { 
+  collection, 
   getDocs,
   doc,
   getDoc,
   addDoc,
-  deleteDoc,
-  setDoc,
-} from 'firebase/firestore';
+  deleteDoc, 
+} from "firebase/firestore";
 
-const productCollection = collection(db, "products"); //constante para buscar los productos
+//constante para buscar los productos
+
+const productsCollection = collection(db, "products");
 
 // ------ GET -----------
 
@@ -41,7 +42,7 @@ const productCollection = collection(db, "products"); //constante para buscar lo
 
 export const getAllProducts = async () => {
   try {
-    const snapshot = await getDocs(productCollection);
+    const snapshot = await getDocs(productsCollection);
     return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
   } catch (error) {
     console.error(error);
@@ -64,35 +65,34 @@ export const getProductById = async (id) => {
 
 //AGREGAR UN CAMBIO -- crear un Objeto (Producto)
 
-export const createProduct = (data) => {
-  const newProduct = {
-      id: products.length +1,
-      ...data,               //--> los datos que quiero cambiar
-    };                       //--> Se crea un objeto
-    
-    products.push(newProduct);    //--> Se hace un push del nuevo objeto
-    
-    fs.writeFileSync(jsonPath, JSON.stringify(products)); //--> guardar el obj en JSON
-
-    return newProduct;
+export const createProduct = async (data) => {
+  try {
+    const docRef = await addDoc(productsCollection, data);
+    return { id: docRef.id, ...data };
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 // ------ DELETE -----------
 
 // Para borrar producto
 
-export const deleteProduct = (id) => {
-  const productIndex = products.findIndex((p) => p.id === id); //busca el indice del producto por el Id    
-  
-  if (productIndex == -1) {
-    return null;  
-  } else {
-    const product = products.splice(productIndex, 1); //--> Quita el elemento
+export const deleteProduct = async (id) => {
+  try {
+    const productRef = doc(productsCollection, id);
+    const snapshot = await getDoc(productRef);
 
-    fs.writeFileSync(jsonPath, JSON.stringify(products)); //--> guardar el obj en JSON
+    if (!snapshot.exists()) {
+      return false;
+    }
 
-    return product;
-  };
-  
+    await deleteDoc(productRef);
+    return true;
+  } catch (error) {
+    console.error(error);
+  }
 };
+
+
 

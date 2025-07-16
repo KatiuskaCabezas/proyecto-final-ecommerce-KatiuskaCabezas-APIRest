@@ -7,7 +7,6 @@ import {
   searchProducts,
   getProductById,
   createProduct,
-  putProducts,
   deleteProduct,
 } from "../controllers/products.controllers.js";
 
@@ -43,12 +42,6 @@ router.get("/products/:id", getProductById);
 //AGREGAR UN CAMBIO -- crear un Objeto
 
 router.post("/products", createProduct);
-
-// ------ PUT -----------
-
-// Para reemplazar un registro (Producto)
-
-router.put("/products/:id", putProducts);
 
 // ------ DELETE -----------
 

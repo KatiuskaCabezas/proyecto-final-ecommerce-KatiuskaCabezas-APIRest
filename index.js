@@ -1,12 +1,11 @@
 //Para guardar las variables de entorno, para no exponer credenciales
 
-import "dotenv/config";
-
 //SERVIDOR //
 
 import express from "express"; // --> Importar express
+const app = express();
 import cors from "cors";  // --> Importar cors
-const app = express(); 
+ 
 
 import productsRouter from './src/routes/products.router.js'
 
