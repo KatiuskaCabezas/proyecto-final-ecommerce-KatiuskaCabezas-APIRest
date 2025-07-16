@@ -1,10 +1,14 @@
+//Para guardar las variables de entorno, para no exponer credenciales
+
+import "dotenv/config";
+
 //SERVIDOR //
 
 import express from "express"; // --> Importar express
 import cors from "cors";  // --> Importar cors
-import productsRouter from './src/routes/products.router.js'
-
 const app = express(); 
+
+import productsRouter from './src/routes/products.router.js'
 
 // Usar MIDDLEWARE para poder leer el cambio con POST -- va antes de las peticiones
 //Llega la petición el middleware detecta si tiene un cuerpo, lo trasnforma para ser leída
@@ -22,5 +26,6 @@ app.use((req, res, next) => {
   res.status(404).json({error: "Not Found"}); //--> mensaje de error
 });
 
-const PORT = 3000; 
+const PORT = process.env.PORT || 3000; 
+
 app.listen(PORT, () => console.log(`http://localhost:${PORT}`));

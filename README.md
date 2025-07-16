@@ -6,3 +6,5 @@ Express
 Nodemon
 POSTMAN
 CORS
+FIRESTORE - FIREBASE - SDK
+Dotenv - Se crea archivo .env
