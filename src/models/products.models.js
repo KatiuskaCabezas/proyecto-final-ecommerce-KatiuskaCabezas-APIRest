@@ -1,24 +1,3 @@
-//modulos nativos, no se instalan
-
-import fs from "fs"; 
-import path from "path";
-
-//Constante que da la ubicación exacta del archivo json, para poder leerlo
-
-const __dirname = import.meta.dirname;
-
-//Constante para poder leer el json
-
-const jsonPath = path.join(__dirname, "./products.json");
-
-//Constante para poder leer la data que esta en el json
-
-const json = fs.readFileSync(jsonPath, "utf-8"); //--> el utf-8 se usa para poder leer el texto
-
-//Constante de productos leido en JS
-
-const products = JSON.parse(json);
-
 //Importar la base de datos desde firestore
 
 import  { db } from "./data.js";
@@ -29,6 +8,7 @@ import {
   doc,
   getDoc,
   addDoc,
+  setDoc,
   deleteDoc, 
 } from "firebase/firestore";
 
@@ -38,7 +18,7 @@ const productsCollection = collection(db, "products");
 
 // ------ GET -----------
 
-//Para listar todos los productos
+//SI QUIERO MOSTRAR LISTA DE PRODUCTOS
 
 export const getAllProducts = async () => {
   try {
@@ -49,7 +29,23 @@ export const getAllProducts = async () => {
   }
 };
 
-//Para buscar un productos
+//SI QUIERO BUSCAR UN PRODUCTO POR NOMBRE
+//tiene que ir antes del parametro dinamico, los search NO estan definidos en la ruta, 
+///api/products/search?name=palabra
+ 
+export const searchProducts = async (req, res) => {
+  const { name } = req.query
+
+  const products = await model.getAllProducts();
+
+  const filteredProducts = products.filter((p) => 
+    p.nombre.toLowerCase().includes(name.toLowerCase())
+  );      
+  res.json(filteredProducts); 
+};
+
+//SI QUIERO BUSCAR UN PRODUCTO por ID -- con parametro dinamico
+//Si el producto no existe ARROJA MENSAJE DE ERROR
 
 export const getProductById = async (id) => {
   try {
@@ -63,7 +59,7 @@ export const getProductById = async (id) => {
 
 // ------ POST -----------
 
-//AGREGAR UN CAMBIO -- crear un Objeto (Producto)
+//AGREGAR UN CAMBIO -- CREAR UN PRODUCTO
 
 export const createProduct = async (data) => {
   try {
@@ -74,9 +70,22 @@ export const createProduct = async (data) => {
   }
 };
 
+// ------ PUT ----------
+
+export const updateProduct = async (id, updatedProductData) => {
+  try {
+    const docRef = doc(productsCollection, id);
+    await setDoc(docRef, updatedProductData, { merge: true });
+    return { id, ...updatedProductData };
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
 // ------ DELETE -----------
 
-// Para borrar producto
+// BORRAR UN PRODCUTO
 
 export const deleteProduct = async (id) => {
   try {

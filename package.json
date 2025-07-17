@@ -9,10 +9,11 @@
   },
   "author": "Katiuska Cabezas",
   "license": "MIT",
-  "description": "Api Rest en Node.js",
+  "description": "Api Rest en Node.js y firebase",
   "type": "module",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^17.2.0",
     "express": "^5.1.0",
     "firebase": "^11.10.0"
   },

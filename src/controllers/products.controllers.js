@@ -10,9 +10,9 @@ export const getAllProducts = async (req, res) => {
   res.json(products);
 };
 
-//SI QUIERO BUSCAR UN PRODUCTO con un parametro
+//SI QUIERO BUSCAR UN PRODUCTO POR NOMBRE
 //tiene que ir antes del parametro dinamico, los search NO estan definidos en la ruta, 
-///products/search?nombre=no&precio=10
+///api/products/search?name=palabra
  
 export const searchProducts = async (req, res) => {
   const { name } = req.query
@@ -25,7 +25,7 @@ export const searchProducts = async (req, res) => {
   res.json(filteredProducts); 
 };
 
-//SI QUIERO ENVIAR UN PRODUCTO por ID -- con parametro dinamico
+//SI QUIERO BUSCAR UN PRODUCTO por ID -- con parametro dinamico
 //Si el producto no existe ARROJA MENSAJE DE ERROR
 
 export const getProductById = async (req, res) => {
@@ -41,7 +41,7 @@ export const getProductById = async (req, res) => {
 
 // ------ POST -----------
 
-//AGREGAR UN CAMBIO -- crear un Objeto (Producto)
+//AGREGAR UN CAMBIO -- CREAR UN PRODUCTO
 
 export const createProduct = async (req, res) => {
     const { name, price, categories } = req.body //--> Se crea constante
@@ -51,9 +51,24 @@ export const createProduct = async (req, res) => {
     res.status(201).json(newProduct);  //--> retorna un 201 (create), un producto que se creo 
 };
 
+// ------ PUT ----------
+
+export const updateProduct = async (req, res) => {
+  const { id } = req.params;
+  const updatedProductData = req.body;
+
+  const updatedProduct = await model.updateProduct(id, updatedProductData);
+
+  if (updatedProduct) {
+    res.json(updatedProduct);
+  } else {
+    res.status(404).json({ message: "Product not found" });
+  }
+};
+
 // ------ DELETE -----------
 
-// Para borrar producto
+//BORRAR UN PRODCUTO
 
 export const deleteProduct = async (req, res) => {
   
