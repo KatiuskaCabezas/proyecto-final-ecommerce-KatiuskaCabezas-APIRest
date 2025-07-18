@@ -11,6 +11,8 @@ import {
   deleteProduct,
 } from "../controllers/products.controllers.js";
 
+import { auth } from "../middlewares/auth.middlewares.js";
+
 // ------ GET -----------
 
 //SI QUIERO MOSTRAR LISTA DE PRODUCTOS
@@ -32,7 +34,7 @@ router.get("/products/:id", getProductById);
 
 //AGREGAR UN CAMBIO -- CREAR UN PRODUCTO
 
-router.post("/products", createProduct);
+router.post("/products", auth, createProduct);
 
 // ------ PUT -----------
 

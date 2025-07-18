@@ -85,3 +85,12 @@ npm rum dev
 ]
 ```
 
+POST
+
+{
+    "id": "k62YqNupqQXpca6Vlu6W",
+    "name": "sofa",
+    "price": 500000,
+    "categories": "hogar"
+}
+
