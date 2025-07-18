@@ -13,8 +13,9 @@ app.use(express.json());  //--> usar express
 import productsRouter from './src/routes/products.router.js'
 app.use("/api", productsRouter);
 
-import authRouter from "./src/routes/auth.router.js";
-app.use("/api", authRouter);
+import authRouter from "./src/routes/auth.routes.js";
+app.use(authRouter);
+
 
 // Usar MIDDLEWARE para leer un error -- va al final de todas las peticiones
 //Llega la petición pasa por todas las rutas si no detecta nada arroja mensaje de error

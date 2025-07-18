@@ -34,7 +34,7 @@ export const getProductById = async (req, res) => {
   const product = await model.getProductById(id);
 
   if (!product) {
-    res.status(404).json({error: "no existe el producto"});
+    res.status(404).json({message: "Product not found"});
   }
   res.json(product); 
 };
@@ -77,7 +77,7 @@ export const deleteProduct = async (req, res) => {
   const product = await model.deleteProduct(productId);  //--> Llama al modelo con el Id
 
     if (!product) {
-      return res.status(404).json({error: "Producto no encontrado"}); //Para informar un error
+      return res.status(404).json({message: "Product not found"}); //Para informar un error
   }  
 
   res.status(204).send(); //--> Informa que se borro el elemento 204=sin contenido
