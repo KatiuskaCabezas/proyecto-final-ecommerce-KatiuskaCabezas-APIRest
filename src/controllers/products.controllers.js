@@ -23,7 +23,7 @@ export const searchProducts = async (req, res) => {
     p.nombre.toLowerCase().includes(name.toLowerCase())
   );      
   res.json(filteredProducts); 
-};
+}; 
 
 //SI QUIERO BUSCAR UN PRODUCTO por ID -- con parametro dinamico
 //Si el producto no existe ARROJA MENSAJE DE ERROR
@@ -68,7 +68,7 @@ export const updateProduct = async (req, res) => {
 
 // ------ DELETE -----------
 
-//BORRAR UN PRODCUTO
+//BORRAR UN PRODUCTO
 
 export const deleteProduct = async (req, res) => {
   

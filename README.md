@@ -24,9 +24,9 @@ Editar el archivo `.env` con los datos correspondientes para el entorno.
 ```shell
 npm rum dev
 ```
-## Documentación de la API
+5. ## Documentación de la API
 
-### SI QUIERO MOSTRAR LISTA DE PRODUCTOS
+### Si quiero mostrar lista de productos
 
 - **GET** `/api/products`
 - **Descripción:** Devuelve la lista de todos los productos.
@@ -64,7 +64,7 @@ npm rum dev
 ]
 ```
 
-### SI QUIERO BUSCAR UN PRODUCTO POR NOMBRE
+### Si quiero buscar un producto por nombre
 
 - **GET** `/api/products/search?name=palabra`
 - **Descripción:** Devuelve los productos si el nombre contiene la palabra que se indica.
@@ -85,12 +85,63 @@ npm rum dev
 ]
 ```
 
-POST
+### Si quiero buscar un producto por ID
 
+- **GET** `/products/:id`
+- **Descripción:** Devuelve un producto por el ID indicado.
+- **Parámetro:**
+     `id` (path, requerido): ID del producto.
+- **Ejemplo de Uso:** `api/products/6hAeud92cfujluN0tQw6`
+- **Ejemplo de Respuesta:** 
+```json
 {
-    "id": "k62YqNupqQXpca6Vlu6W",
-    "name": "sofa",
-    "price": 500000,
-    "categories": "hogar"
+    "id": "6hAeud92cfujluN0tQw6",
+    "categories": [
+        "ropa",
+        "deporte"
+    ],
+    "name": "short deportivo",
+    "price": 300
 }
+```
 
+### Si quiero crear un producto
+
+- **POST** `api/products`
+- **Descripción:** Crea un nuevo producto.
+- **Parámetro:**
+     - Tener Autorización.
+     - Tener token de seguridad.
+- **Body (JSON):**
+
+```json
+{
+        "price": 3000,
+        "categories": "jardín",
+        "name": "Pino"
+    }
+```
+- **Ejemplo de Respuesta:**
+```json
+{
+    "id": "LCqwOHULmNGqSLKrsy2Q",
+    "name": "Pino",
+    "price": 3000,
+    "categories": "jardín"
+}
+```
+
+### Si quiero borrar un producto
+
+- **DELETE** `/products/:id`
+- **Descripción:** Borra un producto seleccionado.
+- **Parámetro:**
+     `id` (path, requerido): ID del producto que se quiere borrar.
+- **Ejemplo de Uso:** `api/products/6`
+- **Ejemplo de Respuesta:** Al buscar el ID en la lista de producto, el mismo no está
+```json
+1
+```
+
+6. Visualizar API por vercel
+https://proyecto-final-ecommerce-katiuska-c.vercel.app/

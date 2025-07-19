@@ -38,6 +38,8 @@ router.post("/products", auth, createProduct);
 
 // ------ PUT -----------
 
+//REEMPLAZAR UN PRODUCTO
+
 router.put("/products/:id", updateProduct);
 
 // ------ DELETE -----------
